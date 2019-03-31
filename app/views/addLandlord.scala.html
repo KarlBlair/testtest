@@ -1,0 +1,32 @@
+@(lForm: Form[models.users.Landlord], user: models.users.User, env: play.api.Environment)
+
+@import helper._ 
+
+@main("Add a Landlord", user) {
+    <p class="lead">Add a new Landlord</p>
+
+    @form(action=routes.HomeController.addLandlordSubmit, 'class -> "form-horizontal", 'role -> "form",
+    'method -> "POST", 'enctype -> "multipart/form-data") {
+        @* CSRF attack Prevention *@
+        @CSRF.formField
+
+        <!-- Uses helper methods to take the values from the form and add it to the database -->
+        <!-- No need to get the id because it's auto generated -->
+        @inputText(lForm("email"), '_label -> "Email", 'class -> "form-control")
+        @inputText(lForm("fname"), '_label -> "First Name", 'class -> "form-control")
+        @inputText(lForm("lname"), '_label -> "Last Name", 'class -> "form-control")
+        @inputText(lForm("password"), '_label -> "Password", 'class -> "form-control")
+
+        @inputText(lForm("role").copy(value=Some("landlord")), '_label -> "", 'hidden -> "hidden")
+
+        <label> Image Upload </label>
+        <input class="btn-sm btn-default" type="file" name="upload">
+    
+        <div class="actions">
+            <input type="submit" value="Add Landlord" class="btn btn-primary">
+            <a href="@routes.HomeController.landlord()">
+                <button type="button" class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+    }
+}

@@ -1,0 +1,91 @@
+@(pagename: String, user: models.users.User)(content: Html)
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ADK @pagename</title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<style>
+			#search-form {
+				background-color:#1f9a95;
+				text-align:center;
+				padding-bottom:1em;
+			}
+			#slide-show {
+				background-color:#d5f1ef;
+				height:350px;
+				/*margin-left:150px;*/
+			}
+			#slide-show img {
+				height:100%;
+				width:350px;
+				float:left;
+			}
+			#slide-show .property-text {
+				background-color:green;
+				height:70%;
+			}
+			#search-form select {
+				color:black;
+			}
+			.white-label {
+				color:white;
+			}
+			.title {
+				display:block;
+				color:white;
+				text-align:center;
+				background-color:rgba(0,0,0,0.2);
+				padding:0.7em;
+				font-size:1.2em;
+				margin-bottom:0.4em;
+			}
+
+			.midcol h1{
+				text-align: center;
+				font-weight: bold;
+			}
+		</style>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+	<body>
+            <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="@routes.HomeController.index()">ADK Houses</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li @if(pagename== "Home"){class="active"}><a href="@routes.HomeController.index()">Home</a></li>
+                            <li @if(pagename == "Payment"){class="active"}><a href="@routes.HomeController.payment()">Payment</a></li>
+							<li @if(pagename == "Database"){class="active"}><a href="@routes.HomeController.database()">Database</a></li>
+							@if((user != null) && ("admin".equals(user.getRole()))) {
+								<li @if(pagename == "Landlords") {class="active"}><a href="@routes.HomeController.landlord()">View Landlords</a></li>
+							}
+							@if((user != null) && ("Member".equals(user.getRole()))) {
+								<li @if(pagename == "RentDue") {class="active"}><a href="@routes.RentCtrl.viewRent()">Rent Due</a></li>	
+							}
+							<li @if(pagename == "Login"){class="active"}>
+							@if(user != null){
+								<a href="@routes.LoginController.logout()">Log Out</a></li>
+							} else {
+									<a href="@routes.LoginController.login()">Log In</a>
+							}
+								
+                        </ul>
+                    </div>
+                </nav>
+
+				<div class = "container-fluid">
+					<div class = "row">
+						<div class = "col-sm-12">
+							<div class = "midcol">
+        						@content
+							</div>
+						</div>
+					</div>
+				</div>
+    </body>
+    <script src="@routes.Assets.versioned("javascripts/main.js")"></script>
+</html>

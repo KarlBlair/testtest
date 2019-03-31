@@ -1,0 +1,36 @@
+@(results: List[models.Houses], user: models.users.User, env: play.api.Environment)
+
+@main("Search", user) {
+    <h1>Search Results</h1>
+
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <!--Header-->
+            <tr>
+                <th>Image</th>
+                <th>ID</th>
+                <th>Bedrooms</th>
+                <th>Bathrooms</th>
+                <th>Price</th>
+                <th>Garden Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(i<-results) {
+				<tr>
+			        @if(env.resource("public/images/workerImages/" + i.getId + "thumb.jpg").isDefined) {
+			        <td><img src="/assets/images/projectImages@(i.getId + " thumb.jpg")" /></td>
+			        } else {
+			        <td><img src="/assets/images/projectImages/noImage.jpg" /></td>
+			        }
+
+				    <td>@i.getId</td>
+				    <td>@i.getNumBeds</td>
+				    <td>@i.getNumBaths</td>
+				    <td>&euro; @("%.2f".format(i.getPrice))</td>
+				    <td>@i.getGardenSize</td>
+				</tr>
+            }
+        </tbody>
+    </table>         
+} 

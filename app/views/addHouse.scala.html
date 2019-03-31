@@ -1,0 +1,33 @@
+@(houseForm: Form[models.Houses], user: models.users.User, env: play.api.Environment)
+
+@import helper._ 
+
+@main("Add House", user) {
+    <p class="lead">Add a new item</p>
+
+    @form(action=routes.HomeController.addHouseSubmit, 'class -> "form-horizontal", 'role -> "form",
+    'method -> "POST", 'enctype -> "multipart/form-data") {
+        @* CSRF attack Prevention *@
+        @CSRF.formField
+
+        <!-- Uses helper methods to take the values from the form and add it to the database -->
+        <!-- No need to get the id because it's auto generated -->
+        @inputText(houseForm("numBeds"), '_label -> "Bedrooms", 'class -> "form-control")
+        @inputText(houseForm("numBaths"), '_label -> "Bathrooms", 'class -> "form-control")
+        @inputText(houseForm("price"), '_label -> "Price", 'class -> "form-control")
+        @inputText(houseForm("gardenSize"), '_label -> "Garden Size", 'class -> "form-control")
+        @inputText(houseForm("garage"), '_label -> "Garage", 'class -> "form-control")
+
+        <label> Image Upload </label>
+        <input class="btn-sm btn-default" type="file" name="upload">
+    
+        @inputText(houseForm("id"), '_label -> "", 'hidden -> "hidden")
+    
+        <div class="actions">
+            <input type="submit" value="Add house" class="btn btn-primary">
+            <a href="@routes.HomeController.database()">
+                <button type="button" class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+    }
+}

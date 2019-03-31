@@ -1,0 +1,59 @@
+@(landList: List[models.users.Landlord], user: models.users.User, env: play.api.Environment)
+@main("Landlord",user) {
+<h1>Current LandLords</h1>
+
+<!-- Displays the flash message -->
+@if(flash.containsKey("success")) {
+<div class="alert alert-success">
+    @flash.get("success")
+</div>
+}
+
+<div class="col-sm-9">
+    <h4>Here are all the current LandLords on the system.</h4>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <!-- The header row -->
+            <tr>
+                <th>Image</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Name</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- Product row(s) -->
+
+            <!-- Loop for creating rows from the users data -->
+            @for(u<-landList) { <tr>
+
+                @if(env.resource("public/images/workerImages/" + u.getEmail + "thumb.jpg").isDefined) {
+                <td><img src="/assets/images/projectImages@(u.getEmail + " thumb.jpg")" /></td>
+                } else {
+                <td><img src="/assets/images/projectImages/noImage.jpg" /></td>
+                }
+
+                <td>@u.getEmail</td>
+                <td>@u.getRole</td>
+                <td>@u.getFname</td>
+                <td>@u.getPassword</td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    <p>
+        <a href="@routes.HomeController.addLandlord()">
+            <button class="btn btn-primary">Add a new Administrator</button>
+        </a>
+    </p>
+</div>
+
+
+
+
+
+
+
+}

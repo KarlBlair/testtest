@@ -1,0 +1,63 @@
+@(user: models.users.User)
+@main("Home", user){
+		<div class="container-fluid">
+			<div class="col-sm-3">
+				<div id="search-form">
+					<form action="@routes.HomeController.searchDB()" method="get">
+						<span class="title">Search Properties</span>
+
+						<!--Area<br>
+						<select>
+							<option value="dublin1">Dublin 1</option>
+							<option value="dublin2">Dublin 2</option>
+							<option value="dublin3">Dublin 3</option>
+							<option value="dublin4">Dublin 4</option>
+							<option value="dublin5">Dublin 5</option>
+							<option value="dublin6">Dublin 6</option>
+							<option value="dublin7">Dublin 7</option>
+							<option value="dublin8">Dublin 8</option>
+							<option value="dublin9">Dublin 9</option>
+							<option value="dublin10">Dublin 10</option>
+							<option value="dublin11">Dublin 11</option>
+							<option value="dublin12">Dublin 12</option>
+							<option value="dublin13">Dublin 13</option>
+							<option value="dublin14">Dublin 14</option>
+							<option value="dublin15">Dublin 15</option>
+							<option value="dublin16">Dublin 16</option>
+							<option value="dublin17">Dublin 17</option>
+							<option value="dublin18">Dublin 18</option>
+							<option value="dublin19">Dublin 19</option>
+							<option value="dublin20">Dublin 20</option>
+							<option value="dublin21">Dublin 21</option>
+							<option value="dublin22">Dublin 22</option>
+							<option value="dublin23">Dublin 23</option>
+							<option value="dublin24">Dublin 24</option>
+						</select>
+						<br><br>-->
+						Minimum Price<br>
+						€ <input type="number" placeholder="Enter minimum price" name="min" />
+
+						<br><br>
+						Maximum Price<br>
+						€ <input type="number" placeholder="Enter maximum price" name="max" />
+
+						<br><br>
+						<input type="submit" />
+					</form>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div id="slide-show">
+					<img src="http://www.bmccormackconstruction.ie/wp-content/uploads/2017/10/dsc9892-350x350.jpg" alt="Slideshow" />
+					<div class="title">Property in AreaName</div>
+					<div class="property-text">hhhhhh</div>
+					zz
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div id="search-form">
+					zzzzz
+				</div>
+			</div>
+		</div>
+	}

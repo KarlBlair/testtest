@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/home/wdd/temp/PlayReminder/app/models/shopping/Basket.java:83:1: cannot find symbol[0m
+[0m[[0m[31merror[0m] [0m[0m  symbol:   variable item[0m
+[0m[[0m[31merror[0m] [0m[0m  location: class models.shopping.Basket[0m
+[0m[[0m[31merror[0m] [0m[0m            OrderItem newItem = new OrderItem(item);[0m

@@ -1,0 +1,149 @@
+@(houses: List[models.Houses], aList: List[models.Apartment],  user: models.users.User, env: play.api.Environment)
+<head>
+@main("Database", user) {
+    <h1>Idea 1</h1>
+
+    <!-- Displays the flash message -->
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+    }
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    
+    </head>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <!--Header-->
+            <tr>
+                <th><i class="fas fa-images"></i></th>
+                <th>ID</th>
+                <th><i class="fas fa-bed"></i></th>
+                <th><i class="fas fa-restroom"></i></th>
+                <th><i class="fas fa-euro-sign"></i></th>
+                <th><i class="fa fa-leaf"></i></th>
+                <th><i class="fas fa-car"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Populating the database-->
+            
+                @for(i<-houses) {
+                    <tr><a href="@routes.HomeController.addHouse()">
+                    @if(env.resource("public/images/projectImages/" + i.getId + "thumb.jpg").isDefined) {
+                    <td href="@routes.HomeController.index"><a><img src="/assets/images/projectImages/@(i.getId + "thumb.jpg")"/></a></td>
+                    } else {
+                    <td><img src="/assets/images/projectImages/noImage.jpg"/></td>
+                    }
+
+                    <td>@i.getId</td>
+                    <td> @i.getNumBeds</td>
+                    <td>@i.getNumBaths</td>
+                    <td>&euro; @("%.2f".format(i.getPrice))</td>
+                    <td>@i.getGardenSize</td>
+                    <td>@i.getGarage</td>
+
+                    @if((user != null) && ("admin".equals(user.getRole()) || "landlord".equals(user.getRole()))) {
+                    <!-- Update button -->
+                    <td>
+                        <a href="@routes.HomeController.updateHouse(i.getId)" class="button-xs btn-danger">
+                            <span class="glyphicon-pencil"><</span>
+                        </a>
+                    </td>
+                }
+
+                @if((user != null) && ("admin".equals(user.getRole()))) {
+                    <!-- Delete button -->
+                    <td>
+                        <a href="@routes.HomeController.deleteHouse(i.getId)" class="button-xs btn-danger" onclick="return confirmDel();">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                }
+                @if((user != null) && ("customer".equals(user.getRole()))) {
+                    <td><a href="@routes.ShoppingCtrl.addToBasket(i.getId)" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-shopping-cart"></span></a></td>
+              }
+                </a>
+            </tr>
+        }
+        </tbody>
+    </table> 
+
+
+
+
+<h1>Idea 2</h1>
+    <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+            <!--Populating the database-->
+            <h4>Houses</h4>
+                @for(i<-houses) {
+                    <tr href="@routes.HomeController.index()">
+                    @if(env.resource("public/images/projectImages/" + i.getId + "thumb.jpg").isDefined) {
+                    <td><img src="/assets/images/projectImages/@(i.getId + "thumb.jpg")"/></td>
+                    } else {
+                    <td><img src="/assets/images/projectImages/noImage.jpg"/></td>
+                    }
+                    <td><i class= "fas fa-bed"></i> @i.getNumBeds</td>
+                    <td><i class= "fas fa-toilet"></i> @i.getNumBaths</td>
+                    <td>&euro; @("%.2f".format(i.getPrice))</td>
+                    <td><i class ="fas fa-leaf"></i>@i.getGardenSize</td>
+
+                    @if(i.getGarage){
+                    <td><i class ="fas fa-car"></i></td>
+                    } else{
+                        <td></td>
+                    }
+                    @if((user != null) && ("admin".equals(user.getRole()) || "landlord".equals(user.getRole()))) {
+                    <!-- Update button -->
+                    <td>
+                        <a href="@routes.HomeController.updateHouse(i.getId)" class="button-xs btn-danger">
+                            <span class="glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                }
+
+                @if((user != null) && ("admin".equals(user.getRole()))) {
+                    <!-- Delete button -->
+                    <td>
+                        <a href="@routes.HomeController.deleteHouse(i.getId)" class="button-xs btn-danger" onclick="return confirmDel();">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                }
+               
+            </tr>
+        }
+        </tbody>
+        </table>
+
+    <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+        <h4>Apartments</h4>
+            @for(i<-aList) {
+                <tr>
+                    @if(env.resource("public/images/projectImages/" + i.getId + "thumb.jpg").isDefined) {
+                    <td><img src="/assets/images/projectImages/@(i.getId + "thumb.jpg")"/></td>
+                    } else {
+                    <td><img src="/assets/images/projectImages/noImage.jpg"/></td>
+                    }
+                    <td><i class= "fas fa-bed"></i> @i.getNumBeds</td>
+                    <td><i class= "fas fa-toilet"></i> @i.getNumBaths</td>
+                    <td>&euro; @("%.2f".format(i.getPrice))</td>
+                </tr>
+            }
+        </tbody>
+    </table>        
+            
+    @if((user != null) && ("admin".equals(user.getRole()) || "landlord".equals(user.getRole()))) {
+    <p>
+        <a href="@routes.HomeController.addHouse()">
+            <button class="btn btn-primary">Add a House</button>
+        </a>
+    </p>
+    }
+
+}
